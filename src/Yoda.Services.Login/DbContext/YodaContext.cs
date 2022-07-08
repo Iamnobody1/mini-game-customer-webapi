@@ -16,7 +16,6 @@ public class YodaContext : DbContext
         modelBuilder.Entity<CustomerEntity>(e =>
         {
             e.ToTable("Customer");
-            e.Property(p => p.Id).ValueGeneratedOnAdd();
         });
     }
 }

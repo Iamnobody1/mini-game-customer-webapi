@@ -32,15 +32,7 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 builder.Services.AddMvc();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(Program));
-builder.Services.AddTransient<IAddressService, AddressService>();
 builder.Services.AddTransient<ICustomerService, CustomerService>();
-builder.Services.AddTransient<IDistrictService, DistrictService>();
-builder.Services.AddTransient<IOrderService, OrderService>();
-builder.Services.AddTransient<IOrderDetailsService, OrderDetailsService>();
-builder.Services.AddTransient<IProductService, ProductService>();
-builder.Services.AddTransient<IProvinceService, ProvinceService>();
-builder.Services.AddTransient<IPostalCodeService, PostalCodeService>();
-builder.Services.AddTransient<ISubDistrictService, SubDistrictService>();
 builder.Services.AddDbContext<YodaContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("Yoda")));
 
 var app = builder.Build();

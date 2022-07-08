@@ -1,30 +1,25 @@
-using AutoMapper;
-using Yoda.Services.Customer.Data;
-
-using Yoda.Services.Customer.Entities;
 using Yoda.Services.Customer.Models;
 
-namespace Yoda.Services.Customer.Services.Customer
+namespace Yoda.Services.Customer.Services.Customer;
+
+public class CustomerService : ICustomerService
 {
-    public class CustomerService : ICustomerService
+    private readonly YodaContext _yodaContext;
+    private readonly IMapper _mapper;
+
+    public CustomerService(YodaContext yodaContext, IMapper mapper)
     {
-        private readonly YodaContext _yodaContext;
-        private readonly IMapper _mapper;
+        _yodaContext = yodaContext;
+        _mapper = mapper;
+    }
 
-        public CustomerService(YodaContext yodaContext, IMapper mapper)
+    public CustomerModel Login(CustomerModel customer)
+    {
+        var item = _yodaContext.Customers.FirstOrDefault(c => c.Id);
+        if (item == null)
         {
-            _yodaContext = yodaContext;
-            _mapper = mapper;
+            return null;
         }
-
-        public CustomerModel Login(int id)
-        {
-            var item = _yodaContext.Customers.FirstOrDefault(c => c.Id == id);
-            if (item == null)
-            {
-                return null;
-            }
-            return new CustomerModel() { Id = item.Id, Name = item.Name };
-        }
+        return new CustomerModel() { Id = item.Id, Name = item.Name };
     }
 }

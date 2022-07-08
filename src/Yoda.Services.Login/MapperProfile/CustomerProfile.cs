@@ -4,10 +4,10 @@ using Yoda.Services.Customer.Models;
 
 namespace Yoda.Services.Customer.MapperProfile;
 
-public class AddressProfile : Profile
+public class CustomerProfile : Profile
 {
-    public AddressProfile()
+    public CustomerProfile()
     {
-        CreateMap<AddressModel, AddressEntity>();
+        CreateMap<CustomerModel, CustomerEntity>();
     }
 }
