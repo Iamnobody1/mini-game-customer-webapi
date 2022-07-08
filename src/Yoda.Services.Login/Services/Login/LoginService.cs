@@ -1,6 +1,6 @@
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Yoda.Services.Login.Data;
-using Yoda.Services.Login.Entities;
 using Yoda.Services.Login.Models;
 
 namespace Yoda.Services.Login.Services.Login;
@@ -16,13 +16,17 @@ public class LoginService : ILoginService
         _mapper = mapper;
     }
 
-    public async Task<bool> Login(CustomerModel customer)
+    public async Task<Guid> Login(CustomerModel customer)
     {
-        var item = _mapper.Map<CustomerEntity>(customer);
+        var item = await _yodaContext.Customers
+            .FirstOrDefaultAsync(x =>
+                x.Username == customer.Username &&
+                x.Password == customer.Password
+            );
         if (item == null)
         {
-            return false;
+            return Guid.Empty;
         }
-        return true;
+        return item.Id;
     }
 }

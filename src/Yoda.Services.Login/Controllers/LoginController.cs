@@ -19,7 +19,7 @@ public class LoginController : ControllerBase
     public async Task<IActionResult> Get([FromBody] CustomerModel customer)
     {
         var result = await LoginService.Login(customer);
-        if (!result)
+        if (result == Guid.Empty)
             return NotFound();
         return Ok(result);
     }
