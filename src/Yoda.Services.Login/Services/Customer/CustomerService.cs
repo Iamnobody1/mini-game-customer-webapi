@@ -1,3 +1,5 @@
+using AutoMapper;
+using Yoda.Services.Customer.Data;
 using Yoda.Services.Customer.Models;
 
 namespace Yoda.Services.Customer.Services.Customer;
@@ -13,13 +15,13 @@ public class CustomerService : ICustomerService
         _mapper = mapper;
     }
 
-    public CustomerModel Login(CustomerModel customer)
+    public bool Login(CustomerModel customer)
     {
-        var item = _yodaContext.Customers.FirstOrDefault(c => c.Id);
+        var item = _yodaContext.Customers.FirstOrDefault(c => c.Username == customer.Username && c.Password == customer.Password);
         if (item == null)
         {
-            return null;
+            return false;
         }
-        return new CustomerModel() { Id = item.Id, Name = item.Name };
+        return true;
     }
 }

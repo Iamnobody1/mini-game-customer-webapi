@@ -17,10 +17,10 @@ public class CustomersController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult Get([FromQuery] int start, [FromQuery] int length)
+    public IActionResult Get([FromBody] CustomerModel customer)
     {
-        var result = CustomerService.Login(start, length);
-        if (result == null)
+        var result = CustomerService.Login(customer);
+        if (!result)
             return NotFound();
         return Ok(result);
     }

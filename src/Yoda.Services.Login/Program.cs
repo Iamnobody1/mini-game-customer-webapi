@@ -1,13 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Yoda.Services.Customer.Data;
-using Yoda.Services.Customer.Services.Country;
 using Yoda.Services.Customer.Services.Customer;
-using Yoda.Services.Customer.Services.District;
-using Yoda.Services.Customer.Services.Order;
-using Yoda.Services.Customer.Services.OrderDetailsService;
-using Yoda.Services.Customer.Services.PostalCode;
-using Yoda.Services.Customer.Services.Product;
-using Yoda.Services.Customer.Services.Province;
 
 var builder = WebApplication.CreateBuilder(args);
 var allowedOrigins = builder.Configuration["AllowedOrigins"];
