@@ -1,4 +1,4 @@
-namespace Yoda.Services.Customer.Models
+namespace Yoda.Services.Login.Models
 {
     public class CustomerModel
     {

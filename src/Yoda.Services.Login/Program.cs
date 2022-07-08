@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Yoda.Services.Customer.Data;
-using Yoda.Services.Customer.Services.Customer;
+using Yoda.Services.Login.Data;
+using Yoda.Services.Login.Services.Login;
 
 var builder = WebApplication.CreateBuilder(args);
 var allowedOrigins = builder.Configuration["AllowedOrigins"];
@@ -25,7 +25,7 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 builder.Services.AddMvc();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(Program));
-builder.Services.AddTransient<ICustomerService, CustomerService>();
+builder.Services.AddTransient<ILoginService, LoginService>();
 builder.Services.AddDbContext<YodaContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("Yoda")));
 
 var app = builder.Build();

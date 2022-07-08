@@ -1,8 +1,8 @@
 using AutoMapper;
-using Yoda.Services.Customer.Entities;
-using Yoda.Services.Customer.Models;
+using Yoda.Services.Login.Entities;
+using Yoda.Services.Login.Models;
 
-namespace Yoda.Services.Customer.MapperProfile;
+namespace Yoda.Services.Login.MapperProfile;
 
 public class CustomerProfile : Profile
 {

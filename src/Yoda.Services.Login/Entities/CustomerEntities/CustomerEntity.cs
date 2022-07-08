@@ -1,4 +1,4 @@
-namespace Yoda.Services.Customer.Entities
+namespace Yoda.Services.Login.Entities
 {
     public class CustomerEntity
     {

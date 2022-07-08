@@ -1,25 +1,24 @@
 using Microsoft.AspNetCore.Mvc;
-using Yoda.Services.Customer.Entities;
-using Yoda.Services.Customer.Models;
-using Yoda.Services.Customer.Services.Customer;
+using Yoda.Services.Login.Models;
+using Yoda.Services.Login.Services.Login;
 
-namespace Yoda.Services.Customer.Controllers;
+namespace Yoda.Services.Login.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class CustomersController : ControllerBase
+public class LoginController : ControllerBase
 {
-    private readonly ICustomerService CustomerService;
+    private readonly ILoginService LoginService;
 
-    public CustomersController(ICustomerService customerService)
+    public LoginController(ILoginService loginService)
     {
-        CustomerService = customerService;
+        LoginService = loginService;
     }
 
-    [HttpGet]
+    [HttpPost]
     public async Task<IActionResult> Get([FromBody] CustomerModel customer)
     {
-        var result = await CustomerService.Login(customer);
+        var result = await LoginService.Login(customer);
         if (!result)
             return NotFound();
         return Ok(result);

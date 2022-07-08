@@ -1,16 +1,16 @@
 using AutoMapper;
-using Yoda.Services.Customer.Data;
-using Yoda.Services.Customer.Entities;
-using Yoda.Services.Customer.Models;
+using Yoda.Services.Login.Data;
+using Yoda.Services.Login.Entities;
+using Yoda.Services.Login.Models;
 
-namespace Yoda.Services.Customer.Services.Customer;
+namespace Yoda.Services.Login.Services.Login;
 
-public class CustomerService : ICustomerService
+public class LoginService : ILoginService
 {
     private readonly YodaContext _yodaContext;
     private readonly IMapper _mapper;
 
-    public CustomerService(YodaContext yodaContext, IMapper mapper)
+    public LoginService(YodaContext yodaContext, IMapper mapper)
     {
         _yodaContext = yodaContext;
         _mapper = mapper;
