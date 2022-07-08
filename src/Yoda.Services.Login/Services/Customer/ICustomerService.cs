@@ -4,5 +4,5 @@ namespace Yoda.Services.Customer.Services.Customer;
 
 public interface ICustomerService
 {
-    bool Login(CustomerModel customer);
+    Task<bool> Login(CustomerModel customer);
 }

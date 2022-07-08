@@ -1,5 +1,6 @@
 using AutoMapper;
 using Yoda.Services.Customer.Data;
+using Yoda.Services.Customer.Entities;
 using Yoda.Services.Customer.Models;
 
 namespace Yoda.Services.Customer.Services.Customer;
@@ -15,9 +16,9 @@ public class CustomerService : ICustomerService
         _mapper = mapper;
     }
 
-    public bool Login(CustomerModel customer)
+    public async Task<bool> Login(CustomerModel customer)
     {
-        var item = _yodaContext.Customers.FirstOrDefault(c => c.Username == customer.Username && c.Password == customer.Password);
+        var item = _mapper.Map<CustomerEntity>(customer);
         if (item == null)
         {
             return false;

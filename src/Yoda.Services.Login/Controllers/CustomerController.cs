@@ -17,9 +17,9 @@ public class CustomersController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult Get([FromBody] CustomerModel customer)
+    public async Task<IActionResult> Get([FromBody] CustomerModel customer)
     {
-        var result = CustomerService.Login(customer);
+        var result = await CustomerService.Login(customer);
         if (!result)
             return NotFound();
         return Ok(result);
