@@ -4,7 +4,7 @@ namespace Yoda.Services.Register.Services
 {
     public interface IRegisterService
     {
-        Task<Guid> Create(CustomerModel customer);
+        Task<Tuple<Guid, string>> Create(CustomerModel customer);
         Task Delete(Guid id);
         Task<CustomerModel> GetByGuidId(Guid id);
         Task<IEnumerable<CustomerModel>> GetListByGuid(Guid id);

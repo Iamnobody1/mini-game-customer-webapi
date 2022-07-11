@@ -39,27 +39,33 @@ namespace Yoda.Services.Register.Services
             return _mapper.Map<IEnumerable<CustomerModel>>(item);
         }
 
-        public async Task<Guid> Create(CustomerModel customer)
+        public async Task<Tuple<Guid, string>> Create(CustomerModel customer)
         {
-            var items = await _yodaContext.Customers
-            .AsNoTracking()
-            .ProjectTo<CustomerModel>(_mapper.ConfigurationProvider)
-            .FirstOrDefaultAsync(cus => cus.DisplayName == customer.DisplayName || cus.Username == customer.Username);
-            if(items == null){
-            var item = _mapper.Map<CustomerEntity>(customer);
-            await _yodaContext.Customers.AddAsync(item);
+            var id = await _yodaContext.Customers
+            .Where(x =>
+                x.DisplayName == customer.DisplayName ||
+                x.Username == customer.Username
+            )
+            .Select(x => x.Id)
+            .DefaultIfEmpty()
+            .FirstAsync();
+
+            if (id != Guid.Empty)
+                return Tuple.Create(id, string.Empty);
+
+            var newItem = _mapper.Map<CustomerEntity>(customer);
+            await _yodaContext.Customers.AddAsync(newItem);
             await _yodaContext.SaveChangesAsync();
-            return item.Id;
-            }
-            return Guid.Empty;
+            return Tuple.Create(newItem.Id, "Data already exists.");
         }
+
         public async Task Update(Guid id, CustomerModel customer)
         {
             customer.Id = id;
             var item = await _yodaContext.Customers.FirstOrDefaultAsync(c => c.Id == id);
             if (item != null)
             {
-               var x = _mapper.Map<CustomerModel,CustomerEntity>(customer,item);
+                var x = _mapper.Map<CustomerModel, CustomerEntity>(customer, item);
                 _yodaContext.Customers.Attach(item);
                 await _yodaContext.SaveChangesAsync();
             }

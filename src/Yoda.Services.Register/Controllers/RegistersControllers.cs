@@ -38,10 +38,9 @@ public class RegistersController : ControllerBase
     public async Task<IActionResult> Post([FromBody] CustomerModel customer)
     {
         var result = await _registerService.Create(customer);
-        if(result == Guid.Empty){
-            return Conflict();
-        }
-        return Ok(result);
+        if(result.Item2 == string.Empty)
+            return Conflict(result.Item1);
+        return Ok(result.Item1);
     }
 
     [HttpPut("{id}")]
