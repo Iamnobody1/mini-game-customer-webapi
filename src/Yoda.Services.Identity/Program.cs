@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Yoda.Services.Identity.Data;
+using Yoda.Services.Identity.Helpers;
 using Yoda.Services.Identity.Services.Login;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,8 +26,9 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 builder.Services.AddMvc();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(Program));
-builder.Services.AddTransient<ILoginService, LoginService>();
+builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddDbContext<YodaContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("Yoda")));
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
 var app = builder.Build();
 if (!app.Environment.IsProduction())

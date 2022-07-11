@@ -19,7 +19,8 @@ public class LoginController : ControllerBase
     public async Task<IActionResult> Get([FromBody] CustomerModel customer)
     {
         var result = await LoginService.Login(customer);
-        if (result == Guid.Empty)
+        Console.WriteLine(result);
+        if (result == string.Empty)
             return Unauthorized();
         return Ok(result);
     }
