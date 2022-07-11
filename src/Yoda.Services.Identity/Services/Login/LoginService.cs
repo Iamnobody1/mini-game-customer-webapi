@@ -1,5 +1,7 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Yoda.Services.Identity.Data;
+using Yoda.Services.Login.Models;
 
 namespace Yoda.Services.Identity.Services.Login;
 

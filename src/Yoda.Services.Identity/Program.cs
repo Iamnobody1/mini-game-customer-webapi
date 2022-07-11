@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Yoda.Services.Login.Data;
-using Yoda.Services.Login.Services.Login;
+using Yoda.Services.Identity.Data;
+using Yoda.Services.Identity.Services.Login;
 
 var builder = WebApplication.CreateBuilder(args);
 var allowedOrigins = builder.Configuration["AllowedOrigins"];
