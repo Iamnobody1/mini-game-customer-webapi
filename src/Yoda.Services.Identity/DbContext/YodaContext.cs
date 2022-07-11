@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Yoda.Services.Login.Entities;
 
-namespace Yoda.Services.Login.Data;
+namespace Yoda.Services.Identity.Data;
 
 public class YodaContext : DbContext
 {

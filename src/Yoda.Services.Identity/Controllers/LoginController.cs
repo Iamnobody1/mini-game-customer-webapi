@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using Yoda.Services.Identity.Services.Login;
 using Yoda.Services.Login.Models;
-using Yoda.Services.Login.Services.Login;
 
-namespace Yoda.Services.Login.Controllers;
+namespace Yoda.Services.Identity.Controllers;
 
 [ApiController]
 [Route("[controller]")]

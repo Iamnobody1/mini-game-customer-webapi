@@ -1,6 +1,6 @@
-using Yoda.Services.Login.Models;
 
-namespace Yoda.Services.Login.Services.Login;
+
+namespace Yoda.Services.Identity.Services.Login;
 
 public interface ILoginService
 {

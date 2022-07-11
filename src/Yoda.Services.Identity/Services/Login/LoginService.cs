@@ -1,9 +1,7 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Yoda.Services.Login.Data;
-using Yoda.Services.Login.Models;
 
-namespace Yoda.Services.Login.Services.Login;
+namespace Yoda.Services.Identity.Services.Login;
 
 public class LoginService : ILoginService
 {
