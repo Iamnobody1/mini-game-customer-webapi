@@ -20,7 +20,7 @@ public class LoginController : ControllerBase
     {
         var result = await LoginService.Login(customer);
         if (result == Guid.Empty)
-            return NotFound();
+            return Unauthorized();
         return Ok(result);
     }
 }
