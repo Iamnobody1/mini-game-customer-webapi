@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 using Yoda.Services.Customer.Entities;
 using Yoda.Services.Register.Models;
@@ -37,6 +38,9 @@ public class RegistersController : ControllerBase
     public async Task<IActionResult> Post([FromBody] CustomerModel customer)
     {
         var result = await _registerService.Create(customer);
+        if(result == Guid.Empty){
+            return Conflict();
+        }
         return Ok(result);
     }
 

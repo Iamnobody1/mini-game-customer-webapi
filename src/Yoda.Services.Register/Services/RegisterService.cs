@@ -1,4 +1,5 @@
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Yoda.Services.Customer.Data;
 using Yoda.Services.Customer.Entities;
@@ -40,10 +41,17 @@ namespace Yoda.Services.Register.Services
 
         public async Task<Guid> Create(CustomerModel customer)
         {
+            var items = await _yodaContext.Customers
+            .AsNoTracking()
+            .ProjectTo<CustomerModel>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(cus => cus.DisplayName == customer.DisplayName || cus.Username == customer.Username);
+            if(items == null){
             var item = _mapper.Map<CustomerEntity>(customer);
             await _yodaContext.Customers.AddAsync(item);
             await _yodaContext.SaveChangesAsync();
             return item.Id;
+            }
+            return Guid.Empty;
         }
         public async Task Update(Guid id, CustomerModel customer)
         {
