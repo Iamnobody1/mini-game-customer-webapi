@@ -1,10 +1,10 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using AutoMapper;
 using Yoda.Services.Identity.Data;
 using Yoda.Services.Identity.Helpers;
 using Yoda.Services.Login.Models;
@@ -24,7 +24,7 @@ public class LoginService : ILoginService
         _appSettings = appSettings.Value;
     }
 
-    public async Task<string> Login(CustomerModel customer)
+    public async Task<JwtTokenModel> Login(CustomerModel customer)
     {
         var item = await _yodaContext.Customers
             .FirstOrDefaultAsync(x =>
@@ -33,24 +33,26 @@ public class LoginService : ILoginService
             );
         if (item == null)
         {
-            return string.Empty;
+            return new JwtTokenModel { };
         }
         var model = _mapper.Map<CustomerModel>(item);
-        var token = generateJwtToken(model);
+        var token = GenerateJwtToken(model);
         return token;
     }
 
-    private string generateJwtToken(CustomerModel user)
+    private JwtTokenModel GenerateJwtToken(CustomerModel user)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
         var tokenDescriptor = new SecurityTokenDescriptor
         {
+            Audience = _appSettings.Audience,
+            Issuer = _appSettings.Issuer,
             Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
-            Expires = DateTime.UtcNow.AddDays(7),
+            Expires = DateTime.UtcNow.AddMilliseconds(_appSettings.TokenValidityInMilliSeconds),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
         };
         var token = tokenHandler.CreateToken(tokenDescriptor);
-        return tokenHandler.WriteToken(token);
+        return new JwtTokenModel { Token = tokenHandler.WriteToken(token), Expire = token.ValidTo };
     }
 }

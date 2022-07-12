@@ -4,5 +4,5 @@ namespace Yoda.Services.Identity.Services.Login;
 
 public interface ILoginService
 {
-    Task<string> Login(CustomerModel customer);
+    Task<JwtTokenModel> Login(CustomerModel customer);
 }

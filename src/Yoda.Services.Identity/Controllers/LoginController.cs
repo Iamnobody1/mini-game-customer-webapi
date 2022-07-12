@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Yoda.Services.Identity.Services.Login;
 using Yoda.Services.Login.Models;
 
 namespace Yoda.Services.Identity.Controllers;
+
 
 [ApiController]
 [Route("[controller]")]
@@ -16,12 +18,27 @@ public class LoginController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Get([FromBody] CustomerModel customer)
+    public async Task<IActionResult> Post([FromBody] CustomerModel customer)
     {
         var result = await LoginService.Login(customer);
         Console.WriteLine(result);
-        if (result == string.Empty)
+        if (result.Token == string.Empty)
             return Unauthorized();
         return Ok(result);
+    }
+
+    [Authorize]
+    [HttpGet]
+    [Route("get")]
+    public async Task<IActionResult> Get()
+    {
+        var x = new CustomerModel{
+            Id = Guid.NewGuid(),
+            Username = "Test1",
+            Password = "Test2",
+            DisplayName = "Test3",
+            Avatar = "Test4"
+        };
+        return Ok(x);
     }
 }
