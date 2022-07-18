@@ -41,4 +41,28 @@ public class LoginController : ControllerBase
         };
         return Ok(x);
     }
+
+    [HttpGet]
+    [Route("get2")]
+    public async Task<IActionResult> Get2()
+    {
+        var x = new CustomerModel{
+            Id = Guid.NewGuid(),
+            Username = "Test1",
+            Password = "Test2",
+            DisplayName = "Test3",
+            Avatar = "Test4"
+        };
+        return Ok(x);
+    }
+
+
+     private string ipAddress()
+    {
+        // get source ip address for the current request
+        if (Request.Headers.ContainsKey("X-Forwarded-For"))
+            return Request.Headers["X-Forwarded-For"];
+        else
+            return HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+    }
 }

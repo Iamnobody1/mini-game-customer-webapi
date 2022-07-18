@@ -7,5 +7,6 @@ namespace Yoda.Services.Login.Models
         public string Password { get; set; }
         public string DisplayName { get; set; }
         public string Avatar { get; set; }
+        public IEnumerable<RefreshTokenModel> RefreshTokens { get; set; }
     }
 }

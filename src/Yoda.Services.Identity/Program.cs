@@ -7,6 +7,8 @@ using Yoda.Services.Identity.Helpers;
 using Yoda.Services.Identity.Services.Login;
 
 var builder = WebApplication.CreateBuilder(args);
+var appSettings = builder.Configuration.GetSection(nameof(AppSettings)).Get<AppSettings>();
+builder.Services.Configure<AppSettings>((builder.Configuration.GetSection(nameof(AppSettings))));
 var allowedOrigins = builder.Configuration["AllowedOrigins"];
 builder.Services.AddCors(options =>
 {
@@ -48,13 +50,11 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateIssuerSigningKey = true,
-        ValidAudience = builder.Configuration["JWT:Audience"],
-        ValidIssuer = builder.Configuration["JWT:Issuer"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
+        ValidAudience = appSettings.Jwt.Audience,
+        ValidIssuer = appSettings.Jwt.Issuer,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSettings.Jwt.Secret))
     };
 });
-
-builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("JWT"));
 
 var app = builder.Build();
 if (!app.Environment.IsProduction())

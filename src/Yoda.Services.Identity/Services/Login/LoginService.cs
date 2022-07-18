@@ -8,10 +8,11 @@ using AutoMapper;
 using Yoda.Services.Identity.Data;
 using Yoda.Services.Identity.Helpers;
 using Yoda.Services.Login.Models;
+using System.Security.Cryptography;
 
 namespace Yoda.Services.Identity.Services.Login;
 
-public class LoginService : ILoginService
+public class LoginService 
 {
     private readonly YodaContext _yodaContext;
     private readonly IMapper _mapper;
@@ -43,16 +44,29 @@ public class LoginService : ILoginService
     private JwtTokenModel GenerateJwtToken(CustomerModel user)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+        var key = Encoding.ASCII.GetBytes(_appSettings.Jwt.Secret);
         var tokenDescriptor = new SecurityTokenDescriptor
         {
-            Audience = _appSettings.Audience,
-            Issuer = _appSettings.Issuer,
+            Audience = _appSettings.Jwt.Audience,
+            Issuer = _appSettings.Jwt.Issuer,
             Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
-            Expires = DateTime.UtcNow.AddMilliseconds(_appSettings.TokenValidityInMilliSeconds),
+            Expires = DateTime.UtcNow.AddMilliseconds(_appSettings.Jwt.TokenValidityInMilliSeconds),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
         };
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return new JwtTokenModel { Token = tokenHandler.WriteToken(token), Expire = token.ValidTo };
+    }
+
+    private YodaToken GenerateYodaToken(CustomerModel user)
+    {
+        return new YodaToken{
+            Token = user.Id.ToString(),
+            Expire = DateTime.UtcNow.AddMinutes(10)
+        };
+    }
+
+    private bool CheckToken(YodaToken token){
+        
+        return false;
     }
 }

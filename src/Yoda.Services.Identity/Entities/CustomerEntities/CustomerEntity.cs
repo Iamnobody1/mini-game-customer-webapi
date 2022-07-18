@@ -7,5 +7,7 @@ namespace Yoda.Services.Identity.Entities
         public string Password { get; set; }
         public string DisplayName { get; set; }
         public string Avatar { get; set; }
+
+        public IEnumerable<RefreshTokenEntity> RefreshTokens { get; set; }
     }
 }
