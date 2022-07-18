@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Yoda.Services.Identity.Attribute;
 using Yoda.Services.Identity.Services.Login;
 using Yoda.Services.Login.Models;
 
@@ -42,20 +43,15 @@ public class LoginController : ControllerBase
         return Ok(x);
     }
 
+    [AllowAnonymous]
+    [CustomAuthorize]
     [HttpGet]
     [Route("get2")]
     public async Task<IActionResult> Get2()
     {
-        var x = new CustomerModel{
-            Id = Guid.NewGuid(),
-            Username = "Test1",
-            Password = "Test2",
-            DisplayName = "Test3",
-            Avatar = "Test4"
-        };
-        return Ok(x);
+        
+        return Ok();
     }
-
 
      private string ipAddress()
     {

@@ -12,7 +12,7 @@ using System.Security.Cryptography;
 
 namespace Yoda.Services.Identity.Services.Login;
 
-public class LoginService 
+public class LoginService : ILoginService
 {
     private readonly YodaContext _yodaContext;
     private readonly IMapper _mapper;
@@ -55,18 +55,5 @@ public class LoginService
         };
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return new JwtTokenModel { Token = tokenHandler.WriteToken(token), Expire = token.ValidTo };
-    }
-
-    private YodaToken GenerateYodaToken(CustomerModel user)
-    {
-        return new YodaToken{
-            Token = user.Id.ToString(),
-            Expire = DateTime.UtcNow.AddMinutes(10)
-        };
-    }
-
-    private bool CheckToken(YodaToken token){
-        
-        return false;
     }
 }

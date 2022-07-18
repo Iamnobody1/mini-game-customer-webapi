@@ -2,6 +2,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Yoda.Services.Customer.Middlewares;
 using Yoda.Services.Identity.Data;
 using Yoda.Services.Identity.Helpers;
 using Yoda.Services.Identity.Services.Login;
@@ -65,9 +66,9 @@ if (!app.Environment.IsProduction())
 app.UseDeveloperExceptionPage();
 app.UseRouting();
 app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+// app.UseCustomAuthorize();
 app.UseCors(nameof(allowedOrigins));
 app.Run();
